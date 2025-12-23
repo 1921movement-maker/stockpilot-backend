@@ -1,0 +1,35 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import { pool } from "./db.js";
+import healthRoutes from "./routes/health.js";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// --- DB bootstrap (multi-tenant: one row per shop) ---
+(async () => {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS shops (
+      id SERIAL PRIMARY KEY,
+      shop TEXT UNIQUE NOT NULL,
+      access_token TEXT NOT NULL,
+      scope TEXT,
+      installed_at TIMESTAMP DEFAULT NOW()
+    );
+  `);
+  console.log("DB ready: shops");
+})();
+
+app.use("/", healthRoutes);
+
+// Later we add:
+// /api/auth (OAuth install)
+// /api/webhooks
+// /api/billing
+// /api/sync
+// /api/inventory
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`StockPilot backend running on :${port}`));

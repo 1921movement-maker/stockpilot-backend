@@ -22,6 +22,14 @@ app.use(express.json());
   console.log("DB ready: shops");
 })();
 
+app.get("/health", async (req, res) => {
+  res.json({
+    status: "ok",
+    service: "stockpilot-backend",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/", healthRoutes);
 
 // Later we add:

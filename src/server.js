@@ -1,9 +1,11 @@
-import "dotenv/config";
+import dotenv from "dotenv/config";
 import express from "express";
 import cors from "cors";
+
 import healthRoutes from "./routes/health.js";
-import pool from "./routes/db.js";
 import shopifyRoutes from "./routes/shopify.js";
+import pool from "./routes/db.js";
+
 
 const app = express();
 app.use(cors());

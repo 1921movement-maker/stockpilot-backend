@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { pool } from "./db.js";
 import healthRoutes from "./routes/health.js";
+import shopifyRoutes from "./routes/shopify.js";
 
 const app = express();
 app.use(cors());
@@ -31,6 +32,7 @@ app.get("/health", async (req, res) => {
 });
 
 app.use("/", healthRoutes);
+app.use("/", shopifyRoutes);
 
 // Later we add:
 // /api/auth (OAuth install)

@@ -1,7 +1,7 @@
 import express from "express";
 import crypto from "crypto";
 import fetch from "node-fetch";
-import pool from "../db.js";
+import pool from "./db.js";
 
 const router = express.Router();
 
